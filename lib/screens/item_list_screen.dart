@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:provider_shop/providers/item_provider.dart';
 import 'package:provider_shop/providers/user_profile_provider.dart';
 import 'package:provider_shop/screens/edit_item_screen.dart';
+import 'package:provider_shop/screens/edit_username_screen.dart';
 
 class ItemListScreen extends StatelessWidget {
   static const routeName = '/';
@@ -14,7 +15,20 @@ class ItemListScreen extends StatelessWidget {
     final username = context.watch<UserProfileProvider>().username;
 
     return Scaffold(
-      appBar: AppBar(title: Text('รายการสินค้า (ผู้ใช้: $username)')),
+      appBar: AppBar(
+        title: Text('รายการสินค้า (ผู้ใช้: $username)'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EditUsernameScreen()),
+              );
+            },
+          ),
+        ],
+      ),
       body: Consumer<ItemProvider>(
         builder: (ctx, itemProvider, child) => ListView.builder(
           itemCount: itemProvider.items.length,
